@@ -10,10 +10,11 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        
-        <!-- CDNs de SweetAlert2 para diseño y manejo de ventanas emergentes, y FontAwesome para íconos -->
+
+        <!-- CDNs de SweetAlert2 para diseño y manejo de ventanas emergentes, FontAwesome para íconos y Chart.js para gráficos -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script defer src="https://kit.fontawesome.com/2af02d949f.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -36,5 +37,6 @@
                 {{ $slot }}
             </main>
         </div>
+        @stack('scripts')
     </body>
 </html>
