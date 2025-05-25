@@ -13,6 +13,6 @@ class DashboardController extends Controller
         $totalCitizens = Citizen::count();
         $citizensPerCity = City::withCount('citizens')->orderBy('citizens_count', 'desc')->get();
 
-        return view('dashboard', compact('totalCities', 'totalCitizens', 'citizenPerCity'));
+        return view('dashboard', compact('totalCities', 'totalCitizens', 'citizensPerCity'));
     }
 }

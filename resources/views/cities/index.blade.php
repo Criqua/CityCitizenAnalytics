@@ -2,7 +2,7 @@
    <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <i class="fas fa-city text-2xl text-indigo-600 dark:text-indigo-400"></i>
+                <i class="fa-regular fa-map text-2xl text-indigo-600 dark:text-indigo-400"></i>
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100">
                     {{ __('Ciudades') }}
                 </h2>

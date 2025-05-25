@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <i class="fa-solid fa-person-walking text-2xl text-indigo-600 dark:text-indigo-400"></i>
+                <i class="fas fa-users text-2xl text-indigo-600 dark:text-indigo-400"></i>
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100">
                     {{ __('Ciudadanos') }}
                 </h2>
