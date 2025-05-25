@@ -31,7 +31,7 @@
                         <div class="flex space-x-4 justify-end">
                             <a href="{{ route('cities.edit', $city->id) }}" class="inline-flex items-center gap-1 text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 font-medium transition">
                                 <i class="fas fa-edit"></i>
-                                {{ __('Edit') }}
+                                {{ __('Editar') }}
                             </a>
 
                             @if(request('delete') == $city->id)
@@ -40,17 +40,17 @@
                                     @method('DELETE')
                                     <button type="submit" class="inline-flex items-center gap-1 px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition">
                                         <i class="fas fa-trash-alt"></i>
-                                        {{ __('Confirm Delete') }}
+                                        {{ __('Confirmar Eliminación') }}
                                     </button>
                                     <a href="{{ route('cities.index') }}" class="inline-flex items-center gap-1 px-3 py-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition">
                                         <i class="fas fa-times"></i>
-                                        {{ __('Cancel') }}
+                                        {{ __('Cancelar') }}
                                     </a>
                                 </form>
                             @else
                                 <a href="{{ route('cities.index', ['delete' => $city->id]) }}" class="inline-flex items-center gap-1 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200 font-medium transition">
                                     <i class="fas fa-trash-alt"></i>
-                                    {{ __('Delete') }}
+                                    {{ __('Eliminar') }}
                                 </a>
                             @endif
                         </div>

@@ -16,7 +16,7 @@ class CityController extends Controller
             $cities = City::orderBy('name', 'asc')->paginate(6);
             return view('cities.index', compact('cities'));
         } catch (\Exception $e) {
-            return redirect()->withErrors(['error' => 'Error al obtener las ciudades: ' . $e->getMessage()]);
+            return redirect()->back()->with('error', 'Error al obtener las ciudades: ' . $e->getMessage());
         }
     }
 
@@ -28,7 +28,7 @@ class CityController extends Controller
         try {
             return view('cities.create');
         } catch (\Exception $e) {
-            return redirect()->withErrors(['error' => 'Error al mostrar el formulario de creación: ' . $e->getMessage()]);
+            return redirect()->back()->with('error', 'Error al cargar el formulario de creación: ' . $e->getMessage());
         }
     }
 
@@ -40,13 +40,18 @@ class CityController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'description' => 'nullable|string|max:500',
+        ], [
+            'name.required' => 'El nombre de la ciudad es obligatorio.',
+            'name.string' => 'El nombre de la ciudad debe ser una cadena de texto.',
+            'name.max' => 'El nombre de la ciudad no puede exceder los 50 caracteres.',
+            'description.max' => 'La descripción no puede exceder los 500 caracteres.',
         ]);
 
         try {
             City::create($request->all());
             return redirect()->route('cities.index')->with('success', 'Ciudad creada exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Error al crear la ciudad: ' . $e->getMessage()]);
+            return redirect()->back()->with('error', 'Error al crear la ciudad: ' . $e->getMessage());
         }
     }
 
@@ -91,7 +96,7 @@ class CityController extends Controller
             $city->update($request->all());
             return redirect()->route('cities.index')->with('success', 'Ciudad actualizada exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Error al actualizar la ciudad: ' . $e->getMessage()]);
+            return redirect()->back()->with('error', 'Error al actualizar la ciudad: ' . $e->getMessage());
         }
     }
 

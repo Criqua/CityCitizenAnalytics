@@ -17,7 +17,7 @@ class CitizenController extends Controller
             $citizens = Citizen::orderBy('first_name', 'asc')->paginate(6);
             return view('citizens.index', compact('citizens'));
         } catch (\Exception $e) {
-            return redirect()->withErrors(['error' => 'Error al obtener los ciudadanos: ' . $e->getMessage()]);
+            return redirect()->back()->with('error', 'Error al obtener los ciudadanos: ' . $e->getMessage());
         }
     }
 
@@ -46,6 +46,12 @@ class CitizenController extends Controller
             'city_id' => 'required|exists:cities,id',
             'address' => 'required|string|max:500',
             'phone_number' => 'nullable|string|max:15',
+        ], [
+            'first_name.required' => 'El nombre es obligatorio.',
+            'last_name.required' => 'El apellido es obligatorio.',
+            'birth_date.required' => 'La fecha de nacimiento es obligatoria.',
+            'city_id.required' => 'La ciudad es obligatoria.',
+            'address.required' => 'La dirección es obligatoria.',
         ]);
 
         try {

@@ -16,13 +16,13 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('cities.index')" :active="request()->routeIs('cities.index')">
-                        {{ __('Cities') }}
+                        {{ __('Ciudades') }}
                     </x-nav-link>
                     <x-nav-link :href="route('citizens.index')" :active="request()->routeIs('citizens.index')">
-                        {{ __('Citizens') }}
+                        {{ __('Ciudadanos') }}
                     </x-nav-link>
                     <div class="flex items-center space-x-4">
-                        <a href="{{ route('#') }}" @class([ 'inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 dark:focus:ring-offset-gray-800 transition', 'ring-2 ring-offset-2 ring-blue-500' => request()->routeIs('#') ])>
+                        <a href="#" @class([ 'inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 dark:focus:ring-offset-gray-800 transition', 'ring-2 ring-offset-2 ring-blue-500' => request()->routeIs('#') ])>
                         <i class="fas fa-paper-plane"></i>
                             {{ __('Enviar correo') }}
                         </a>
@@ -54,9 +54,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
@@ -83,12 +81,12 @@
             {{ __('Dashboard') }}
         </x-responsive-nav-link>
         <x-responsive-nav-link :href="route('cities.index')" :active="request()->routeIs('cities.*')">
-            {{ __('Cities') }}
+            {{ __('Ciudades') }}
         </x-responsive-nav-link>
         <x-responsive-nav-link :href="route('citizens.index')" :active="request()->routeIs('citizens.*')">
-            {{ __('Citizens') }}
+            {{ __('Ciudadanos') }}
         </x-responsive-nav-link>
-        <x-responsive-nav-link :href="route('#')">
+        <x-responsive-nav-link href="#">
             <i class="fas fa-paper-plane mr-2"></i>{{ __('Enviar correo') }}
         </x-responsive-nav-link>
         </div>
