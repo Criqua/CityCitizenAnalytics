@@ -1,61 +1,51 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CityCitizenAnalytics
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel web application developed as part of a collaborative academic practice for the *Web Design & E-Commerce* course. It implements a MVC architecture with Eloquent ORM, Blade views, and email reporting functionality via SMTP. The app lets users:
 
-## About Laravel
+- Track, create, update and delete cities and citizens  
+- View citizen counts across cities and other key metrics on a dashboard
+- Browse citizens grouped by city
+- Send and receive a citizens-by-city report via email with a single click
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features (Functional Requirements)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Dashboard:**  
+   - **Card 1:** Shows the total number of cities  
+   - **Card 2:** Shows the total number of citizens  
+   - **Card 3:** Displays a horizontal bar chart showing the number of citizens per city in ascending order
 
-## Learning Laravel
+2. **Grouped View:**  
+   - Displays citizens organized by city in a table  
+   - Sorts cities alphabetically  
+   - Provides a search bar to filter by citizen name or city  
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **Email Reporting:**  
+   - Adds a navigation button that, when clicked, sends an email containing the citizens-by-city report
+   
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Team & Responsibilities
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Development was split into feature branches, one per team member, as follows:
 
-## Laravel Sponsors
+- **[Cristian Gago](https://github.com/Criqua)** – `feature/dashboard-cards`  
+Built the dashboard's key metric cards and integrated bar chart component; led the integration of feature branches into `develop` for testing.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **[Manuel López](https://github.com/ElVatoEste)** – `feature/citizens_grouped_view`  
+  Created the grouped-by-city table view *(citizen's index.blade.php)* and implemented the search/filter logic.
 
-### Premium Partners
+- **[María Aguilar](https://github.com/mabelenaa)** – `feature/email-report`  
+  Defined the `Mailable` class, designed the email Blade view template, and configured the mailing logic.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## Git Workflow
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+To summarize:
+1. Every new feature lives in its own **feature/** branch
+2. All feature branches are merged into `develop` for integration testing
+3. Once `develop` is stable, it's merged into `main` for "release"
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
