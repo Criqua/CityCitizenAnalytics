@@ -86,12 +86,12 @@
     </div>
 
     <!-- Botón de enviar/cancelar -->
-    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-        <button type="submit" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900 transition-all">
+    <div class="flex flex-col gap-3">
+        <button type="submit" class="w-full inline-flex justify-center items-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900 transition-all">
             <i class="fas {{ $isEdit ? 'fa-rotate' : 'fa-user-plus' }}"></i>
             {{ $isEdit ? __('Actualizar Ciudadano') : __('Crear Ciudadano') }}
         </button>
-        <a href="{{ route('citizens.index') }}" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition">
+        <a href="{{ route('citizens.index') }}" class="w-full inline-flex justify-center items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition">
             <i class="fas fa-arrow-left"></i>
             {{ __('Cancelar') }}
         </a>
