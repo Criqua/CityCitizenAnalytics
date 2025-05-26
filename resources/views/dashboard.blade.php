@@ -41,7 +41,14 @@
             <h3 class="text-lg font-semibold text-center text-gray-700 dark:text-gray-200 mb-4">
                 {{ __('Ciudadanos por ciudad') }}
             </h3>
-            <canvas id="citizensChart"></canvas>
+            
+            @if($citizensPerCity->isEmpty())
+                <p class="text-center text-gray-500 dark:text-gray-400">
+                    {{ __('No hay datos para mostrar.') }}
+                </p>
+            @else
+                <canvas id="citizensChart"></canvas>
+            @endif
         </div>
     </div>
 
