@@ -88,7 +88,7 @@ class CityController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:50|unique:cities,name',
+            'name' => "required|string|max:50|unique:cities,name,{$id}",
             'description' => 'nullable|string|max:500',
         ], [
             'name.required' => 'El nombre de la ciudad es obligatorio.',
