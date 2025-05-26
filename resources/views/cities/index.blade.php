@@ -1,3 +1,4 @@
+{{-- resources/views/cities/index.blade.php --}}
 <x-app-layout>
    <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -7,12 +8,48 @@
                     {{ __('Ciudades') }}
                 </h2>
             </div>
-            <a href="{{ route('cities.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900 transition">
+            <a href="{{ route('cities.create') }}"
+               class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900 transition">
                 <i class="fas fa-plus"></i>
                 {{ __('Crear Ciudad') }}
             </a>
         </div>
     </x-slot>
+
+{{-- Modal de advertencia tipo diálogo --}}
+@if(session('warning'))
+    <div
+        x-data="{ open: true }"
+        x-show="open"
+        role="dialog"
+        aria-modal="true"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4"
+    >
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-lg w-auto overflow-hidden">
+            <header class="flex items-center px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <i class="fas fa-exclamation-triangle text-yellow-500 text-2xl mr-3"></i>
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                    ¡Atención!
+                </h3>
+            </header>
+            <div class="px-6 py-4">
+                <p class="text-gray-700 dark:text-gray-300">
+                    {{ session('warning') }}
+                </p>
+            </div>
+            <footer class="flex justify-end px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+                <button
+                    @click="open = false"
+                    class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
+                >
+                    Cerrar
+                </button>
+            </footer>
+        </div>
+    </div>
+@endif
+
+
 
     <div class="min-h-screen py-8 bg-gray-50 dark:bg-gray-900 transition-colors">
         <div class="max-w-6xl mx-auto px-4">
@@ -28,27 +65,34 @@
                             </p>
                         </div>
 
-                        <div class="flex space-x-4 justify-end">
-                            <a href="{{ route('cities.edit', $city->id) }}" class="inline-flex items-center gap-1 text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 font-medium transition">
+                        {{-- Botones responsive --}}
+                        <div class="flex flex-wrap gap-2 justify-end">
+                            <a href="{{ route('cities.edit', $city->id) }}"
+                               class="w-full sm:w-auto inline-flex items-center gap-1 px-3 py-1 bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-700 dark:hover:bg-indigo-600 text-indigo-600 dark:text-indigo-200 font-medium rounded-lg transition">
                                 <i class="fas fa-edit"></i>
                                 {{ __('Editar') }}
                             </a>
 
                             @if(request('delete') == $city->id)
-                                <form action="{{ route('cities.destroy', $city->id) }}" method="POST" class="flex space-x-3">
+                                <form action="{{ route('cities.destroy', $city->id) }}"
+                                      method="POST"
+                                      class="w-full sm:w-auto flex flex-wrap gap-2">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="inline-flex items-center gap-1 px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition">
+                                    <button type="submit"
+                                            class="inline-flex items-center gap-1 px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition">
                                         <i class="fas fa-trash-alt"></i>
                                         {{ __('Confirmar Eliminación') }}
                                     </button>
-                                    <a href="{{ route('cities.index') }}" class="inline-flex items-center gap-1 px-3 py-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition">
+                                    <a href="{{ route('cities.index') }}"
+                                       class="inline-flex items-center gap-1 px-3 py-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition">
                                         <i class="fas fa-times"></i>
                                         {{ __('Cancelar') }}
                                     </a>
                                 </form>
                             @else
-                                <a href="{{ route('cities.index', ['delete' => $city->id]) }}" class="inline-flex items-center gap-1 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200 font-medium transition">
+                                <a href="{{ route('cities.index', ['delete' => $city->id]) }}"
+                                   class="w-full sm:w-auto inline-flex items-center gap-1 px-3 py-1 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200 font-medium transition">
                                     <i class="fas fa-trash-alt"></i>
                                     {{ __('Eliminar') }}
                                 </a>
@@ -58,7 +102,7 @@
                 @endforeach
             </div>
 
-            <!-- Pagination -->
+            {{-- Paginación --}}
             <div class="mt-8">
                 {{ $cities->links() }}
             </div>

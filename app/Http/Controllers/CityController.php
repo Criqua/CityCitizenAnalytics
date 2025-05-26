@@ -105,12 +105,21 @@ class CityController extends Controller
      */
     public function destroy(string $id)
     {
+        $city = City::withCount('citizens')->findOrFail($id);
+
+        if ($city->citizens_count > 0) {
+            return redirect()->back()
+                ->with('warning', 'No se puede eliminar la ciudad porque tiene ciudadanos registrados.');
+        }
+
         try {
-            $city = City::findOrFail($id);
             $city->delete();
-            return redirect()->route('cities.index')->with('success', 'Ciudad eliminada exitosamente.');
+            return redirect()->route('cities.index')
+                ->with('success', 'Ciudad eliminada exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Error al eliminar la ciudad: ' . $e->getMessage()]);
+            return redirect()->back()
+                ->withErrors(['error' => 'Error al eliminar la ciudad: ' . $e->getMessage()]);
         }
     }
+
 }
