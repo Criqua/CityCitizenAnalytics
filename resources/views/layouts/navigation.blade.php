@@ -22,8 +22,12 @@
                         {{ __('Ciudadanos') }}
                     </x-nav-link>
                     <div class="flex items-center space-x-4">
-                        <a href="#" @class([ 'inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 dark:focus:ring-offset-gray-800 transition', 'ring-2 ring-offset-2 ring-blue-500' => request()->routeIs('#') ])>
-                        <i class="fas fa-paper-plane"></i>
+                    <a href="{{ route('enviar.reporte') }}"
+                            @class([
+                                'inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 dark:focus:ring-offset-gray-800 transition',
+                                'ring-2 ring-offset-2 ring-blue-500' => request()->routeIs('enviar.reporte')
+                            ])>
+                            <i class="fas fa-paper-plane"></i>
                             {{ __('Enviar correo') }}
                         </a>
                     </div>                       
@@ -86,8 +90,8 @@
         <x-responsive-nav-link :href="route('citizens.index')" :active="request()->routeIs('citizens.*')">
             {{ __('Ciudadanos') }}
         </x-responsive-nav-link>
-        <x-responsive-nav-link href="#">
-            <i class="fas fa-paper-plane mr-2"></i>{{ __('Enviar correo') }}
+        <x-responsive-nav-link :href="route('enviar.reporte')">
+                <i class="fas fa-paper-plane mr-2"></i>{{ __('Enviar correo') }}
         </x-responsive-nav-link>
         </div>
 
