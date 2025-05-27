@@ -38,11 +38,12 @@ class CityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:50',
+            'name'        => 'required|string|max:50|unique:cities,name',
             'description' => 'nullable|string|max:500',
         ], [
             'name.required' => 'El nombre de la ciudad es obligatorio.',
             'name.string' => 'El nombre de la ciudad debe ser una cadena de texto.',
+            'name.unique' => 'El nombre de la ciudad ya existe.',
             'name.max' => 'El nombre de la ciudad no puede exceder los 50 caracteres.',
             'description.max' => 'La descripción no puede exceder los 500 caracteres.',
         ]);
@@ -87,8 +88,14 @@ class CityController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => "required|string|max:50|unique:cities,name,{$id}",
             'description' => 'nullable|string|max:500',
+        ], [
+            'name.required' => 'El nombre de la ciudad es obligatorio.',
+            'name.string' => 'El nombre de la ciudad debe ser una cadena de texto.',
+            'name.unique' => 'El nombre de la ciudad ya existe.',
+            'name.max' => 'El nombre de la ciudad no puede exceder los 50 caracteres.',
+            'description.max' => 'La descripción no puede exceder los 500 caracteres.',
         ]);
 
         try {
@@ -105,12 +112,21 @@ class CityController extends Controller
      */
     public function destroy(string $id)
     {
+        $city = City::withCount('citizens')->findOrFail($id);
+
+        if ($city->citizens_count > 0) {
+            return redirect()->back()
+                ->with('warning', 'No se puede eliminar la ciudad porque tiene ciudadanos registrados.');
+        }
+
         try {
-            $city = City::findOrFail($id);
             $city->delete();
-            return redirect()->route('cities.index')->with('success', 'Ciudad eliminada exitosamente.');
+            return redirect()->route('cities.index')
+                ->with('success', 'Ciudad eliminada exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Error al eliminar la ciudad: ' . $e->getMessage()]);
+            return redirect()->back()
+                ->withErrors(['error' => 'Error al eliminar la ciudad: ' . $e->getMessage()]);
         }
     }
+
 }

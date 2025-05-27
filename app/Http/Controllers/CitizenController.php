@@ -11,14 +11,44 @@ class CitizenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        try {
-            $citizens = Citizen::orderBy('first_name', 'asc')->paginate(6);
-            return view('citizens.index', compact('citizens'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error al obtener los ciudadanos: ' . $e->getMessage());
+        $search = $request->input('search');
+
+        $citiesQuery = City::with(['citizens' => function($q) {
+            $q->orderBy('first_name', 'asc');
+        }])->orderBy('name', 'asc')
+
+        // 2) Filtra ciudades: nombre O having ciudadanos coincidentes
+        ->when($search, function($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+            ->orWhereHas('citizens', function($q2) use ($search) {
+                $q2->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name',  'like', "%{$search}%");
+            });
+        });
+
+        $cities = $citiesQuery->paginate(6)->appends(['search' => $search]);
+
+        if ($search) {
+            $cities->getCollection()->transform(function($city) use ($search) {
+                // Si la ciudad coincide por nombre, se devuelven sus ciudadanos
+                if (stripos($city->name, $search) !== false) {
+                    return $city;
+                }
+
+                // Si no, se devuelven solo los ciudadanos cuyo nombre/apellido coincida
+                $filtered = $city->citizens->filter(function($c) use ($search) {
+                    return stripos($c->first_name, $search) !== false
+                    || stripos($c->last_name,  $search) !== false;
+                })->values();
+
+                $city->setRelation('citizens', $filtered);
+                return $city;
+            });
         }
+
+        return view('citizens.index', compact('cities', 'search'));
     }
 
     /**
@@ -125,4 +155,5 @@ class CitizenController extends Controller
             return redirect()->back()->with('error', 'Error al eliminar el ciudadano: ' . $e->getMessage());
         }
     }
+
 }

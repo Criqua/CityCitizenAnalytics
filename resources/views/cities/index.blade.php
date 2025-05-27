@@ -1,13 +1,15 @@
+{{-- resources/views/cities/index.blade.php --}}
 <x-app-layout>
-   <x-slot name="header">
+    <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <i class="fas fa-city text-2xl text-indigo-600 dark:text-indigo-400"></i>
+                <i class="fa-regular fa-map text-2xl text-indigo-600 dark:text-indigo-400"></i>
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100">
                     {{ __('Ciudades') }}
                 </h2>
             </div>
-            <a href="{{ route('cities.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900 transition">
+            <a href="{{ route('cities.create') }}"
+               class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900 transition">
                 <i class="fas fa-plus"></i>
                 {{ __('Crear Ciudad') }}
             </a>
@@ -34,31 +36,20 @@
                                 {{ __('Editar') }}
                             </a>
 
-                            @if(request('delete') == $city->id)
-                                <form action="{{ route('cities.destroy', $city->id) }}" method="POST" class="flex space-x-3">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="inline-flex items-center gap-1 px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition">
-                                        <i class="fas fa-trash-alt"></i>
-                                        {{ __('Confirmar Eliminación') }}
-                                    </button>
-                                    <a href="{{ route('cities.index') }}" class="inline-flex items-center gap-1 px-3 py-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition">
-                                        <i class="fas fa-times"></i>
-                                        {{ __('Cancelar') }}
-                                    </a>
-                                </form>
-                            @else
-                                <a href="{{ route('cities.index', ['delete' => $city->id]) }}" class="inline-flex items-center gap-1 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200 font-medium transition">
+                            <form action="{{ route('cities.destroy', $city->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete-city inline-flex items-center gap-1 px-3 py-1 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200 font-medium transition" data-has-citizens="{{ $city->citizens->count() }}">
                                     <i class="fas fa-trash-alt"></i>
                                     {{ __('Eliminar') }}
-                                </a>
-                            @endif
+                                </button>
+                            </form>
                         </div>
                     </div>
                 @endforeach
             </div>
 
-            <!-- Pagination -->
+            {{-- Paginación --}}
             <div class="mt-8">
                 {{ $cities->links() }}
             </div>
