@@ -49,3 +49,25 @@ To summarize:
 3. Once `develop` is stable, it's merged into `main` for "release"
 
 ---
+
+## Quick Setup
+
+> **Note:** This project requires **PHP 8.4.x** to meet the version constraints of Laravel 10+ and its ecosystem packages. If that's already settled, run the following commands in your terminal:
+
+    git clone https://github.com/Criqua/CityCitizenAnalytics.git
+    cd CityCitizenAnalytics
+    composer install
+    cp .env.example .env
+    php artisan key:generate
+
+> Then, you need to set up **SMTP (Gmail)**. To do so, open .env, locate the mail settings and replace it with your credentials (from line 51 to line 58).
+
+    php artisan migrate
+    npm install
+    npm run build
+    php artisan serve
+
+---
+
+You're all set!
+
