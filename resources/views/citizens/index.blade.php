@@ -60,6 +60,7 @@
                                             <th class="px-4 py-2 text-gray-700 dark:text-gray-200">{{ __('Edad') }}</th>
                                             <th class="px-4 py-2 text-gray-700 dark:text-gray-200">{{ __('Dirección') }}</th>
                                             <th class="px-4 py-2 text-gray-700 dark:text-gray-200">{{ __('Teléfono') }}</th>
+                                            <th class="px-4 py-2 text-right text-gray-700 dark:text-gray-200">{{ __('Acciones') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -76,6 +77,26 @@
                                                 </td>
                                                 <td class="px-4 py-2 text-gray-800 dark:text-gray-100">
                                                     {{ $citizen->phone_number ?? '—' }}
+                                                </td>
+                                                <td class="px-4 py-2 text-right">
+                                                    <div class="flex flex-wrap gap-2 justify-end">
+                                                        <a href="{{ route('citizens.edit', $citizen->id) }}"
+                                                           class="inline-flex items-center gap-1 px-3 py-1 bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-700 dark:hover:bg-indigo-600 text-indigo-600 dark:text-indigo-200 font-medium rounded-lg transition">
+                                                            <i class="fas fa-edit"></i>
+                                                            {{ __('Editar') }}
+                                                        </a>
+
+                                                        <form action="{{ route('citizens.destroy', $citizen->id) }}" method="POST"
+                                                              onsubmit="return confirm('¿Estás seguro de eliminar este ciudadano?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                    class="inline-flex items-center gap-1 px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                                {{ __('Eliminar') }}
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach

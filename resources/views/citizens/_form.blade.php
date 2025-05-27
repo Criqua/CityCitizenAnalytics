@@ -76,11 +76,16 @@
 
     <!-- Campo de teléfono del ciudadano -->
     <div>
-        <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+        <label for="phone_number" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
             {{ __('Número de teléfono') }}
         </label>
-        <input type="text" name="phone" id="phone" value="{{ old('phone_number', $citizen->phone_number ?? '') }}" placeholder="Ejemplo: +505 1234-5678" class="block w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"/>
-        @error('phone')
+        <input type="text"
+            name="phone_number"
+            id="phone_number"
+            value="{{ old('phone_number', $citizen->phone_number ?? '') }}"
+            placeholder="Ejemplo: +505 1234-5678"
+            class="block w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" />
+        @error('phone_number')
             <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
         @enderror
     </div>
