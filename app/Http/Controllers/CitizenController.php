@@ -11,15 +11,30 @@ class CitizenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        try {
-            $citizens = Citizen::orderBy('first_name', 'asc')->paginate(6);
-            return view('citizens.index', compact('citizens'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error al obtener los ciudadanos: ' . $e->getMessage());
-        }
+        $search = $request->input('search');
+
+        $cities = City::with(['citizens' => function($q) use ($search) {
+            if ($search) {
+                $q->where(function($q) use ($search) {
+                    $q->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name',  'like', "%{$search}%");
+                });
+            }
+            $q->orderBy('first_name', 'asc');
+        }])
+        ->orderBy('name', 'asc')
+        ->get()
+        ->filter(function($city) use ($search) {
+            if (! $search) return true;
+            return str_contains(strtolower($city->name), strtolower($search))
+                || $city->citizens->isNotEmpty();
+        });
+
+        return view('citizens.index', compact('cities', 'search'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -125,4 +140,5 @@ class CitizenController extends Controller
             return redirect()->back()->with('error', 'Error al eliminar el ciudadano: ' . $e->getMessage());
         }
     }
+
 }
