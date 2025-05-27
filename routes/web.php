@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CitizenController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\ReportCitizenController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +22,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('citizens', CitizenController::class);
     Route::resource('cities', CityController::class);
+    Route::get('/enviar-reporte', [ReportCitizenController::class, 'send_report'])->name('enviar.reporte');
+
 });
 
 require __DIR__.'/auth.php';
