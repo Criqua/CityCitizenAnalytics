@@ -15,8 +15,6 @@ class ReportCitizenController extends Controller
         $user = $request->user();
         $email = $user->email;
 
-        //dd($email); 
-
         $cities = City::with('citizens')->orderBy('name')->get();
 
         Mail::to($email)->send(new ReportMail($cities));
