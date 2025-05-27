@@ -15,26 +15,41 @@ class CitizenController extends Controller
     {
         $search = $request->input('search');
 
-        $cities = City::with(['citizens' => function($q) use ($search) {
-            if ($search) {
-                $q->where(function($q) use ($search) {
-                    $q->where('first_name', 'like', "%{$search}%")
-                    ->orWhere('last_name',  'like', "%{$search}%");
-                });
-            }
+        $citiesQuery = City::with(['citizens' => function($q) {
             $q->orderBy('first_name', 'asc');
-        }])
-        ->orderBy('name', 'asc')
-        ->get()
-        ->filter(function($city) use ($search) {
-            if (! $search) return true;
-            return str_contains(strtolower($city->name), strtolower($search))
-                || $city->citizens->isNotEmpty();
+        }])->orderBy('name', 'asc')
+
+        // 2) Filtra ciudades: nombre O having ciudadanos coincidentes
+        ->when($search, function($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+            ->orWhereHas('citizens', function($q2) use ($search) {
+                $q2->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name',  'like', "%{$search}%");
+            });
         });
+
+        $cities = $citiesQuery->paginate(6)->appends(['search' => $search]);
+
+        if ($search) {
+            $cities->getCollection()->transform(function($city) use ($search) {
+                // Si la ciudad coincide por nombre, se devuelven sus ciudadanos
+                if (stripos($city->name, $search) !== false) {
+                    return $city;
+                }
+
+                // Si no, se devuelven solo los ciudadanos cuyo nombre/apellido coincida
+                $filtered = $city->citizens->filter(function($c) use ($search) {
+                    return stripos($c->first_name, $search) !== false
+                    || stripos($c->last_name,  $search) !== false;
+                })->values();
+
+                $city->setRelation('citizens', $filtered);
+                return $city;
+            });
+        }
 
         return view('citizens.index', compact('cities', 'search'));
     }
-
 
     /**
      * Show the form for creating a new resource.
